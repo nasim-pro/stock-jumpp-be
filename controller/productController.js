@@ -16,13 +16,14 @@ exports.addProduct = (req, res) => {
     return res.status(200).send({success: true, msg: "product added successfully"})
 }
 
-exports.getallProduct = (req, res) => {
-    let products = Product.find({}, (err) => {
-        if (err) {
-            return res.status(500).send({ success: false, msg: err })
-        }
-    });
-    return res.status(200).send({success: true, products})
+exports.getallProduct = async (req, res) => {
+    let products;
+    try {
+         products = await Product.find({ });
+    } catch (error) {
+        return res.status(500).send({ success: false, msg: err })
+    }  
+    return res.status(200).send(products)
 }
 
 exports.changePrice = (req, res) => {

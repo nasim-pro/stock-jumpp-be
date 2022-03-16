@@ -1,0 +1,23 @@
+POST http://localhost:4000/product/addproduct
+Content-Type: application/json
+
+{
+    "name" : "biryani",
+    "price":50,
+    "category":"nonveg"
+}
+
+###
+
+PUT http://localhost:4000/product/changeprice/6231f85114ef135ffeccf464
+Content-Type: application/json
+
+{
+"newprice":60
+}
+
+###
+GET http://localhost:4000/product/getallproduct
+
+###
+DELETE http://localhost:4000/product/deleteproduct/6231f85114ef135ffeccf464
