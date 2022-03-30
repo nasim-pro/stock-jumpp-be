@@ -7,14 +7,16 @@ exports.addCategory = async (req, res) => {
         name: name,
         categoryId: categoryId
     });
-
-   await  category.save((err) => {
-        if (err) {
-            return res.status(500).send({success: false, msg: err})
-        }
-    })
-    return res.status(200).send({success: true, msg: "Category added successfully"})
+    
+         category.save((err) => {
+            if (err) {
+                return res.status(500).send({success: false, msg: err})
+            } else {
+                return res.status(200).send({success: true, msg: "Category added successfully"})
+            }
+        })
 }
+
 //getting all available category
 exports.getallCategory = async (req, res) => {
     let products;
@@ -50,4 +52,6 @@ exports.getCategoryById = async (req, res) => {
 } 
 
 
-
+exports.createCategoryForm = (req, res) => {
+    res.render('createCategory.ejs')
+}
