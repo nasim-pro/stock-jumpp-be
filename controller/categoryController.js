@@ -9,10 +9,10 @@ exports.addCategory = async (req, res) => {
     });
     
          category.save((err) => {
-            if (err) {
-                return res.status(500).send({success: false, msg: err})
-            } else {
-                return res.status(200).send({success: true, msg: "Category added successfully"})
+             if (err) {
+                 return res.render('normalresponse.ejs', {msg: err})
+             } else {
+                 return res.render('normalresponse.ejs', {msg:"Category added successfully"} )
             }
         })
 }
@@ -23,9 +23,9 @@ exports.getallCategory = async (req, res) => {
     try {
          products = await Category.find({ });
     } catch (error) {
-        return res.status(500).send({ success: false, msg: err })
+        return res.render('normalresponse.ejs', { msg: err })
     }  
-    return res.status(200).send(products)
+    return res.render('normalresponse.ejs', {  msg: products })
 }
 
 //deleing a scategory from th database
@@ -33,10 +33,12 @@ exports.deleteCategory = async (req, res) => {
     let pid = mongoose.Types.ObjectId(req.params.productid);
     await Category.deleteOne({ _id: pid }, (err) => {
         if (err) {
-            return res.status(500).send({ success: false, msg: err })
+            return res.render('normalresponse.ejs', { msg: err })
+        } else {
+            return res.render('normalresponse.ejs', {  msg: 'Deleted successfully' })
         }
     })
-    return res.status(200).send({success: true, msg:"deleted successfully"})
+   
 }
 //get the Object id of the particular category using id
 exports.getCategoryById = async (req, res) => {
@@ -48,7 +50,7 @@ exports.getCategoryById = async (req, res) => {
         return res.status(400).send({success: false, msg: err})
     }
     
-    return res.status(200).send({success: true, category})
+    res.render('normalresponse.ejs', {  msg: category })
 } 
 
 
