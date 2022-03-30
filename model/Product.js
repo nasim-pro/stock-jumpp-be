@@ -11,8 +11,11 @@ let productSchema = new mongoose.Schema({
     },
     category: {
         type:String,
-        enum: ['beverage', 'veg', 'nonveg']
+        enum: ['pizza', 'burger', 'sweets', 'paratha', 'sandwich']
     },
+    options: {
+        type: String,
+    }
 
 })
 
