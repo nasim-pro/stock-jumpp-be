@@ -10,13 +10,14 @@ let productSchema = new mongoose.Schema({
         required: true
     },
     category: {
-        type:String,
-        enum: ['pizza', 'burger', 'sweets', 'paratha', 'sandwich']
+        type: mongoose.Schema.Types.ObjectId,
+        ref :'Category'
     },
-    options: {
-        type: String,
+    productId: {
+        type: Number,
+        required: true,
+        unique: true
     }
-
 })
 
 let Product = mongoose.model("Product", productSchema);

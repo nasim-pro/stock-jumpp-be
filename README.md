@@ -1,7 +1,7 @@
 # fullfilled below requirement:
-1. HTML Page - Category Master with CRUD operations
+1. HTML Page - all Category with CRUD operations
 
-2. HTML Page - Product Master with CRUD operations. A product belongs to a category.
+2. HTML Page - Product with CRUD operations. A product belongs to a category.
 
 3. The product list should also display ProductId, ProductName, CategoryName, CategoryId.
 
