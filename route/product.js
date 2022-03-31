@@ -10,4 +10,6 @@ productRouter.get('/getallproduct', controller.getallProduct)
 
 productRouter.delete('/deleteproduct/:productid', controller.deleteproduct);
 
+productRouter.get('/createProduct', controller.createProduct)
+
 module.exports = productRouter;

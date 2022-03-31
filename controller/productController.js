@@ -5,18 +5,17 @@ const mongoose = require('mongoose')
 exports.addProduct = async (req, res) => {
     const { name, price, categoryId } = req.body;
     let category;
-    try {
-        category = await Category.find({ categoryId: categoryId })
-   } catch (err) {
-       return res.status(400).send({success: false, msg: err})
-    }
     
+    category = await Category.find({ categoryId: categoryId }).catch((err) => {
+        return console.log(err);
+    })
+    console.log(category);
     let product;
     if (name && price && category) {
         product = new Product({
             name: name,
             price: price,
-            category: category
+            category: category._id
         });
     }else {
         return res.status(204).send({ success: false, msg: "all fields are required"})
@@ -25,9 +24,11 @@ exports.addProduct = async (req, res) => {
     await product.save((err) => {
         if (err) {
             return res.status(500).send({success: false, msg: err})
+        } else {
+            return res.status(200).send({success: true, msg: "product added successfully"})
         }
     })
-    return res.status(200).send({success: true, msg: "product added successfully"})
+    
 }
 
 exports.getallProduct = async (req, res) => {
@@ -62,5 +63,9 @@ exports.deleteproduct = async (req, res) => {
     return res.status(200).send({success: true, msg:"deleted successfully"})
 }
 
+//serving static html
+exports.createProduct = (req, res) => {
+    res.render('createProduct.ejs')
+}
 
 
