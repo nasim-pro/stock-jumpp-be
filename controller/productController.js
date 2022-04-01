@@ -39,7 +39,7 @@ exports.getallProduct = async (req, res) => {
     console.log(skip);
     let products;
     try {
-        products = await Product.find({}).populate('category').skip(skip*3).limit(3)
+        products = await Product.find({}).populate('category').skip(skip*10).limit(10)
     } catch (err) {
         return res.render('normalresponse.ejs', {msg: err})
         // return res.status(500).send({ success: false, msg: err })
