@@ -19,13 +19,15 @@ exports.addCategory = async (req, res) => {
 
 //getting all available category
 exports.getallCategory = async (req, res) => {
-    let products;
+    let category;
     try {
-         products = await Category.find({ });
+        category = await Category.find({});
     } catch (error) {
         return res.render('normalresponse.ejs', { msg: err })
-    }  
-    return res.render('normalresponse.ejs', {  msg: products })
+    }
+    console.log(category);
+    
+    return res.render('showAllCategory.ejs', {msg: category} )
 }
 
 //deleing a scategory from th database

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <style>
+        div{
+            text-align: center;
+        }
+        body{
+            background-color: #db228e;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Product list:</h1>
+        
+        <ul><% if(msg.length>0){ %>
+            <% msg.forEach(function(product){ %>
+              <h2><%=product %></h2>
+            <% }); %>
+            <% } %>
+        </ul>
+    </div>
+    <h1><a href="/">HomePage</a></h1>
+</body>
+</html>

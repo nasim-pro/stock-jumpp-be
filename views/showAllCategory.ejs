@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>show category</title>
+    <style>
+        div{
+            text-align: center;
+        }
+        body{
+            background-color: #c2db31;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Category list:</h1>
+    <div>
+        <ul><% if(msg.length>0){ %>
+            <% msg.forEach(function(cat){ %>
+              <h2><%=cat %></h2>
+            <% }); %>
+            <% } %>
+        </ul>
+
+    </div>
+    <h1><a href="/">HomePage</a></h1>
+</body>
+</html>

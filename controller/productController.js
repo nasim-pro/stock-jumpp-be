@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 exports.addProduct = async (req, res) => {
     const { name, price, productId, categoryId } = req.body;
     let category;
-    
+    console.log(productId);
     category = await Category.find({ categoryId: categoryId }).catch((err) => {
         return console.log(err);
     })
@@ -15,31 +15,35 @@ exports.addProduct = async (req, res) => {
         product = new Product({
             name: name,
             price: price,
-            productId: productId,
+            productId: parseInt(productId),
             category: category[0]._id
         });
-    }else {
-        return res.status(204).send({ success: false, msg: "all fields are required"})
+    } else {
+        return res.render('normalresponse.ejs', {msg: "All fields are required"})
+        //return res.status(204).send({ success: false, msg: "all fields are required"})
    }
     
     await product.save((err) => {
         if (err) {
-            return res.status(500).send({success: false, msg: err})
+            return res.render('normalresponse.ejs', {msg: err})
+            // return res.status(500).send({success: false, msg: err})
         } else {
+            return res.render('normalresponse.ejs', {msg: "Product added successfully"})
             return res.status(200).send({success: true, msg: "product added successfully"})
         }
     })
-    
 }
 
 exports.getallProduct = async (req, res) => {
     let products;
     try {
-         products = await Product.find({ });
-    } catch (error) {
-        return res.status(500).send({ success: false, msg: err })
+        products = await Product.find({}).populate('category')
+    } catch (err) {
+        return res.render('normalresponse.ejs', {msg: err})
+        // return res.status(500).send({ success: false, msg: err })
     }  
-    return res.status(200).send(products)
+    return res.render('showAllProducts.ejs', {msg: products})
+    // return res.status(200).send(products)
 }
 
 exports.changePrice = async (req, res) => {

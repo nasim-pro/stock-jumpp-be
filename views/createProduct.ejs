@@ -5,8 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter Product</title>
+    <style>
+        body{
+            background-color: #33df2d;
+        }
+        div{
+            display: inline;
+            text-align: center;
+        }
+        form{
+            margin-top: 200px;
+        }
+        input{
+           font-size: 30px;
+        }
+    </style>
 </head>
 <body>
+    
     <form action="/product/addproduct" method="post">
         <input type="text" name="name" id="product", placeholder="Enter product name">
         <input type="number" name="price" id="price", placeholder="Enter the price">
