@@ -9,7 +9,7 @@ exports.addProduct = async (req, res) => {
     category = await Category.find({ categoryId: categoryId }).catch((err) => {
         return console.log(err);
     })
-    console.log(category[0]._id);
+    
     let product;
     if (name && price && category) {
         product = new Product({

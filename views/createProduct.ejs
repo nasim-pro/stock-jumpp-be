@@ -14,22 +14,26 @@
             text-align: center;
         }
         form{
-            margin-top: 200px;
+            margin-top: 150px;
+            margin-bottom: 100px;
         }
         input{
-           font-size: 30px;
+           font-size: 20px;
         }
     </style>
 </head>
 <body>
-    
+<div>
+    <h1>Enter the product name, id, price and categoryId needs to be already in the db</h1>
     <form action="/product/addproduct" method="post">
         <input type="text" name="name" id="product", placeholder="Enter product name">
         <input type="number" name="price" id="price", placeholder="Enter the price">
-        <input type="text" name="productId" id="" placeholder="enter product id">
+        <input type="text" name="productId" id="" placeholder="Enter product id">
         <input type="text" name="categoryId" id="categoryId" placeholder="Enter category ID">
         <input type="submit" value="Submit">
     </form>
-   
+</div>
+    
+   <h1><a href="/">HomePage</a></h1>
 </body>
 </html>
