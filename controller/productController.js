@@ -3,19 +3,20 @@ const Category = require('../model/Category')
 const mongoose = require('mongoose')
 
 exports.addProduct = async (req, res) => {
-    const { name, price, categoryId } = req.body;
+    const { name, price, productId, categoryId } = req.body;
     let category;
     
     category = await Category.find({ categoryId: categoryId }).catch((err) => {
         return console.log(err);
     })
-    console.log(category);
+    console.log(category[0]._id);
     let product;
     if (name && price && category) {
         product = new Product({
             name: name,
             price: price,
-            category: category._id
+            productId: productId,
+            category: category[0]._id
         });
     }else {
         return res.status(204).send({ success: false, msg: "all fields are required"})
