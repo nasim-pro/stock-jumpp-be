@@ -14,7 +14,8 @@
             text-align: center;
         }
         form{
-            margin-top: 200px;
+            margin-top: 150px;
+            margin-bottom: 100px;
         }
         input{
            font-size: 30px;
@@ -23,6 +24,7 @@
 </head>
 <body>
     <div>
+        <h1>Enter the below details to create the Category, category id needs to be an unique integer</h1>
         <form action="/category/addcategory" method="post">
             <input type="text" name="name" id="name" placeholder="Enter category name">
             <input type="number" name="categoryId" id="categoryId" placeholder="Enter category id">
