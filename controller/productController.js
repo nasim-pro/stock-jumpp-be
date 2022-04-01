@@ -35,14 +35,17 @@ exports.addProduct = async (req, res) => {
 }
 
 exports.getallProduct = async (req, res) => {
+    let skip = parseInt(req.params.skip);
+    console.log(skip);
     let products;
     try {
-        products = await Product.find({}).populate('category')
+        products = await Product.find({}).populate('category').skip(skip*3).limit(3)
     } catch (err) {
         return res.render('normalresponse.ejs', {msg: err})
         // return res.status(500).send({ success: false, msg: err })
     }  
-    return res.render('showAllProducts.ejs', {msg: products})
+    skip = skip + 1;
+    return res.render('showAllProducts.ejs', {msg: products, url: `/product/getallproduct/${skip}`})
     // return res.status(200).send(products)
 }
 

@@ -6,7 +6,7 @@ productRouter.post('/addproduct', controller.addProduct);
 
 productRouter.put('/changeprice/:productid', controller.changePrice);
 
-productRouter.get('/getallproduct', controller.getallProduct)
+productRouter.get('/getallproduct/:skip', controller.getallProduct)
 
 productRouter.delete('/deleteproduct/:productid', controller.deleteproduct);
 
