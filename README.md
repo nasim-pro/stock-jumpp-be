@@ -11,5 +11,5 @@ So if the page size is 10 and the user is on page 9 then pull only records from 
 
 # How Run Application:
 1. clone th repository
-2. Go to the root folder and execute npm install to install the dependencies, make sure you already have nodejs and npm
-3. then type npm startapplication will start
+2. Go to the root folder and execute **npm install** to install the dependencies, make sure you already have nodejs and npm
+3. then type **npm start** application will start
