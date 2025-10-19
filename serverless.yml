@@ -1,0 +1,24 @@
+service: stock-backend
+
+provider:
+  name: aws
+  runtime: nodejs22.x
+  region: ap-south-1
+  stage: dev
+  environment:
+    TELEGRAM_BOT_TOKEN: ${env:TELEGRAM_BOT_TOKEN}
+    CHAT_ID: ${env:CHAT_ID}
+    MONGO_URI: ${env:MONGO_URI}
+    PORT: ${env:PORT}
+
+plugins:
+  - serverless-dotenv-plugin
+
+functions:
+  app:
+    handler: handler.handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: any
+          cors: true
