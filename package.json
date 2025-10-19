@@ -1,0 +1,22 @@
+{
+  "name": "stockjumppbe",
+  "version": "1.0.0",
+  "description": "provides api for connecting to db",
+  "license": "ISC",
+  "author": "nasim",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.0",
+    "serverless-http": "^4.0.0"
+  },
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^6.0.0"
+  }
+}
