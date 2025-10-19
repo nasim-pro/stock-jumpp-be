@@ -33,8 +33,11 @@ const TABLE_NAME = "quarterlyresults"; // Assuming this table exists
 export const saveStock = async (req, res) => {
     try {
         const body = req.body;
+        const compositeKey = `${body?.stockName || body?.ticker || uuidv4()}_${body?.nseBse}_${body.currentQuarter}`
+            ?.replaceAll(' ', '_')
+            .toLowerCase(); // Composite PK
         const item = {
-            id: uuidv4(),
+            id: compositeKey,
             createdAt: new Date().toISOString(),
             ...body,
         };
