@@ -11,6 +11,15 @@ provider:
     MONGO_URI: ${env:MONGO_URI}
     PORT: ${env:PORT}
 
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:Scan
+          Resource: ${env:DYNAMODB_RESOURCE_URL}
+
 plugins:
   - serverless-dotenv-plugin
 
