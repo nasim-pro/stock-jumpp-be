@@ -13,9 +13,7 @@ config()
 // --- Configuration ---
 // Added explicit region configuration for robustness (matching the Canvas standard)
 const awsRegion = process.env.AWS_REGIONN 
-const clientConfig = {
-    region: awsRegion, // IMPORTANT: Configure your AWS Region
-};
+const clientConfig = { region: awsRegion }; // IMPORTANT: Configure your AWS Region
 
 const client = new DynamoDBClient(clientConfig);
 const db = DynamoDBDocumentClient.from(client);
