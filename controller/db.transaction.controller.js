@@ -30,9 +30,7 @@ export const buy = async (req, res) => {
         });
 
         if (existing) {
-            return res
-                .status(400)
-                .json({ message: `Stock ${stock.ticker || stock.stockName} already bought` });
+            return res.status(400).json({ message: `Stock ${stock.ticker || stock.stockName} already bought` });
         }
 
         const newStock = new Stock(stock);
@@ -57,9 +55,7 @@ export const sell = async (req, res) => {
         });
 
         if (!stock) {
-            return res
-                .status(404)
-                .json({ message: `Stock ${ticker} not found or already sold` });
+            return res.status(404).json({ message: `Stock ${ticker} not found or already sold` });
         }
 
         stock.status = "sold";
