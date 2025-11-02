@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { getLastProcessed, buy, sell, updateLastProcessed } from '../controller/db.transaction.controller.js';
-import { saveStock, listStocks } from '../controller/dynamoDBController.js';
+import { getLastProcessed, buy, sell, updateLastProcessed, listStocks } from '../controller/db.transaction.controller.js';
+import { saveStock } from '../controller/dynamoDBController.js';
+
 const router = Router();
 
 router.get('/last-processed', getLastProcessed);
