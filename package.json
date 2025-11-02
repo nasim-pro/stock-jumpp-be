@@ -8,7 +8,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch server.js"
+    "start": "node --watch test-server.js"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.913.0",
