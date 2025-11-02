@@ -1,6 +1,7 @@
 // dynamoDBController.js (Express/Node.js API Controller for for lambda)
 
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { saveQuarterlyResult } from "./db.transaction.controller.js"; // Assuming this is the correct path
 import {
     DynamoDBDocumentClient,
     PutCommand,
@@ -39,7 +40,11 @@ export const saveStock = async (req, res) => {
             createdAt: new Date().toISOString(),
             ...body,
         };
-        await db.send(new PutCommand({ TableName: TABLE_NAME, Item: item }));
+        // await db.send(new PutCommand({ TableName: TABLE_NAME, Item: item }));
+        // Save to MongoDB as well
+        const { id, ...rest } = item;
+        const saveObj = { compositeKey: id, ...rest };
+        await saveQuarterlyResult(saveObj);
         // Respond with 201 Created status
         res.status(201).json({ message: "Result saved successfully", item });
     } catch (error) {
@@ -48,49 +53,3 @@ export const saveStock = async (req, res) => {
     }
 };
 
-
-/**
- * Retrieves a paginated list of items using DynamoDB Scan.
- * Accepts optional `limit` and `lastKey` query parameters.
- * @param {object} req - Express request object (expects 'limit' and 'lastKey' query params)
- * @param {object} res - Express response object
- */
-export const listStocks = async (req, res) => {
-    /*
-    !!! WARNING: SCAN OPERATION !!!
-    This function uses the ScanCommand. It is highly inefficient and expensive for
-    large tables as it reads the entire dataset. For production use, always
-    prefer QueryCommand based on your Partition Key (PK).
-    */
-
-    try {
-        const { limit = 10, lastKey } = req.query;
-
-        // Logic to safely parse the encoded JSON key from the query string
-        const exclusiveStartKey = lastKey
-            ? JSON.parse(decodeURIComponent(lastKey))
-            : undefined;
-
-        const params = {
-            TableName: TABLE_NAME,
-            Limit: Number(limit),
-            ExclusiveStartKey: exclusiveStartKey,
-        };
-
-        const result = await db.send(new ScanCommand(params));
-
-        // Logic to encode the LastEvaluatedKey for the client to use in the next request
-        const nextKey = result.LastEvaluatedKey
-            ? encodeURIComponent(JSON.stringify(result.LastEvaluatedKey))
-            : null;
-
-        res.json({
-            items: result.Items || [],
-            nextKey: nextKey, // Client uses this to request the next page
-            count: result.Count, // Number of items in this page
-        });
-    } catch (error) {
-        console.error("DynamoDB List Error:", error);
-        res.status(500).json({ message: "Failed to list stocks", error: error.message });
-    }
-};
