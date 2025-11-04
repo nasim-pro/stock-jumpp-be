@@ -140,29 +140,29 @@ export const saveQuarterlyResult = async (data)=>{
 export const listStocks = async (req, res)=> {
     try {
         await connectToMongoDb();
-        const page = parseInt(req.query.page) || 1;
-        const limit = 10;
-        const skip = (page - 1) * limit;
+        // const page = parseInt(req.query.page) || 1;
+        // const limit = 10;
+        // const skip = (page - 1) * limit;
 
         let filter = {};
         const now = new Date();
         const last24Hours = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
         // Page 1 → only results from the last 24 hours
-        if (page === 1) {
+        // if (page === 1) {
             filter = { createdAt: { $gte: last24Hours } };
-        }
+        // }
 
         const results = await QuarterlyResult.find(filter)
             .sort({ createdAt: -1 })
-            .skip(skip)
-            .limit(limit);
+            // .skip(skip)
+            // .limit(limit);
 
         const totalCount = await QuarterlyResult.countDocuments(filter);
 
         return res.status(200).json({
             success: true,
-            page,
+            // page,
             total: totalCount,
             count: results.length,
             data: results,
