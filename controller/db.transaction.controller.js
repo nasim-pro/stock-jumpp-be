@@ -107,7 +107,7 @@ export const updateLastProcessed = async (req, res) => {
  * @param {Object} data - Any valid JavaScript object
  * @returns {Promise<Object>} - The saved document
  */
-export const saveQuarterlyResult = async (data)=>{
+export const saveQuarterlyResult = async (data) => {
     try {
         await connectToMongoDb();
         if (!data || typeof data !== "object") {
@@ -137,7 +137,7 @@ export const saveQuarterlyResult = async (data)=>{
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  */
-export const listStocks = async (req, res)=> {
+export const listStocks = async (req, res) => {
     try {
         await connectToMongoDb();
         // const page = parseInt(req.query.page) || 1;
@@ -150,13 +150,13 @@ export const listStocks = async (req, res)=> {
 
         // Page 1 → only results from the last 24 hours
         // if (page === 1) {
-            filter = { createdAt: { $gte: last24Hours } };
+        filter = { createdAt: { $gte: last24Hours } };
         // }
 
         const results = await QuarterlyResult.find(filter)
             .sort({ createdAt: -1 })
-            // .skip(skip)
-            // .limit(limit);
+        // .skip(skip)
+        // .limit(limit);
 
         const totalCount = await QuarterlyResult.countDocuments(filter);
 
@@ -175,3 +175,48 @@ export const listStocks = async (req, res)=> {
         });
     }
 }
+
+// top growers
+export const topGrowers = async (req, res) => {
+    try {
+        await connectToMongoDb();
+        // Map incoming query params to actual DB fields
+        const metricMap = {
+            qoqPat: "qoqPatGrowth",
+            qoqEPS: "qoqEpsGrowth",
+            qoqOP: "qoqOpGrowth",
+            yoyPat: "yoySameQuarterGrowthPat",
+            yoyEPS: "yoySameQuarterGrowthEps",
+            yoyOP: "yoySameQuarterGrowthOp",
+        };
+
+        const queryMetric = req.query?.metric || "yoyPat"; // default metric
+        const metric = metricMap[queryMetric];
+
+        if (!metric) {
+            return res.status(400).json({
+                error: "Invalid metric. Use one of: qoqPat, qoqEPS, qoqOP, yoyPat, yoyEPS, yoyOP",
+            });
+        }
+
+        const days = parseInt(req.query.days) || 30;
+        const limit = parseInt(req.query.limit) || 50;
+        const order = req.query.order === "asc" ? 1 : -1; // default: descending
+
+        const cutoffDate = new Date();
+        cutoffDate.setDate(cutoffDate.getDate() - days);
+
+        // Query the DB
+        const results = await QuarterlyResult.find({
+            createdAt: { $gte: cutoffDate },
+            [metric]: { $ne: null },
+        })
+            .sort({ [metric]: order })
+            .limit(limit);
+
+        res.status(200).json(results);
+    } catch (err) {
+        console.error("Error fetching top growers:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
