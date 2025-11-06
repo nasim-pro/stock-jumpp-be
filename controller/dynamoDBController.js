@@ -40,7 +40,7 @@ export const saveStock = async (req, res) => {
             createdAt: new Date().toISOString(),
             ...body,
         };
-        // await db.send(new PutCommand({ TableName: TABLE_NAME, Item: item }));
+        await db.send(new PutCommand({ TableName: TABLE_NAME, Item: item }));
         // Save to MongoDB as well
         const { id, ...rest } = item;
         const saveObj = { compositeKey: id, ...rest };
