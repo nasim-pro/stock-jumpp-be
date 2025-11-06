@@ -199,7 +199,7 @@ export const topGrowers = async (req, res) => {
             });
         }
 
-        const days = parseInt(req.query.days) || 30;
+        const days = parseInt(req.query.days) || 90;
         const limit = parseInt(req.query.limit) || 50;
         const order = req.query.order === "asc" ? 1 : -1; // default: descending
 
@@ -211,8 +211,8 @@ export const topGrowers = async (req, res) => {
             createdAt: { $gte: cutoffDate },
             [metric]: { $ne: null },
         })
-            .sort({ [metric]: order })
-            .limit(limit);
+        .sort({ [metric]: order })
+        .limit(limit);
 
         res.status(200).json(results);
     } catch (err) {
