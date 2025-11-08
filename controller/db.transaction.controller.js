@@ -6,7 +6,7 @@ import { QuarterlyResult } from "../model/QuarterlyResult.schema.js";
 config();
 
 // MongoDB connection
-async function connectToMongoDb() {
+export async function connectToMongoDb() {
     if (mongoose.connection.readyState === 0) {
         try {
             await connect(process.env.MONGO_URI);
